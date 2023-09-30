@@ -9,21 +9,33 @@ class Partido:
         self.local_team = Team(local_team)
         self.visitor_team = Team(visitor_team)
         self.duration = duration*60  # in seconds
-        self.team_turn = "local"
+        self.possession = "local"
+        self.shoot_cap = 0
 
     def switch_team_turn(self):
-        if self.team_turn == "local":
-            self.team_turn = "visitor"
-        elif self.team_turn == "visitor":
-            self.team_turn = "local"
+        if self.possession == "local":
+            self.possession = "visitor"
+        elif self.possession == "visitor":
+            self.possession = "local"
 
     def simular_partido(self):
         seconds = 0
         print(f"Comienza el partido entre { self.local_team.name } y { self.visitor_team.name } acaba de empezar.\n")
         while seconds < self.duration:
-            print(f"Minute { seconds//60 }, second { seconds % 60 }, turn: { self.team_turn }\n")
+            print(f"Minute { seconds//60 }, second { seconds % 60 }, possession for: { self.possession }\n")
 
-            event_choice = random.randint(0, 10)
+            event_choice = random.randint(0, 100 + self.shoot_cap)
+            if event_choice < 25:
+                # Batalla entre jugadores
+                self.shoot_cap += 5
+                pass
+            elif 25 <= event_choice < 50:
+                # El jugador con la posesión pasa a oto de su equipo
+                self.shoot_cap += 2.5
+                pass
+            else:
+                # El jugador con la posesión tira a puerta
+                pass
             """
             # Simulamos un evento en cada minuto
             evento = random.choice(["Nada", "Tiro al arco", "Pase", "Falta"])
