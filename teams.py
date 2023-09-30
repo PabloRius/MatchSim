@@ -8,6 +8,8 @@ class Team:
         self.unparsed_players = self.team_list["jugadores"]
         self.keeper = self.parse_keeper()
         self.players = self.parse_players()
+        self.goals = 0
+        self.name = self.team_list["nombre"]
 
     def parse_keeper(self):
         return Jugador(self.unparsed_keeper["nombre"], self.unparsed_keeper["pos"], self.unparsed_keeper["rango"])
@@ -20,6 +22,7 @@ class Team:
 
 
 los_cimitarras = {
+    "nombre": "Los Cimitarras",
     "jugadores": [
         {
             "nombre": "Shakir",
@@ -79,6 +82,7 @@ los_cimitarras = {
          }
 }
 dragon_link = {
+    "nombre": "Dragon Link",
     "jugadores": [
         {
             "nombre": "Quintet",
