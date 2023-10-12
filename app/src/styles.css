@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+:root{
+    --title-color: #f3de3c;
+    --secondary-color: #A8DD2B
+}
+
+.body{
+    width: 95%;
+    margin: 30px auto 0 auto;
+}

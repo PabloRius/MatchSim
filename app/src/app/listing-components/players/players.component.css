@@ -1,0 +1,8 @@
+.table{
+    width: 100%;
+}
+
+.responsive-image {
+    width: 20%; /* Establece el ancho máximo deseado */
+    height: auto; /* Mantiene la relación de aspecto */
+  }

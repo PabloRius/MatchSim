@@ -1,0 +1,8 @@
+.vscode
+.angular
+.editorconfig
+*.rar 
+*.zip
+/lambda_function
+/node_modules
+__pycache__

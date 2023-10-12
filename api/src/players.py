@@ -1,5 +1,5 @@
 class Jugador:
-    def __init__(self, nombre, pos, rango):
+    def __init__(self, nombre: str, pos: str, rango: str):
         self.nombre = nombre
         self.pos = pos
         self.rango = rango

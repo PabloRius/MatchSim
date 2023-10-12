@@ -1,0 +1,21 @@
+<button type="button" class="btn btn-primary" routerLink="/create-player">Add player</button>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col" style="width: 20%;">#</th>
+        <th scope="col" style="width: 20%;">Name</th>
+        <th scope="col" style="width: 20%;">Position</th>
+        <th scope="col" style="width: 20%;">Rank</th>
+        <th scope="col" style="width: 20%;">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of filteredPlayers">
+        <th scope="row">{{player.id}}</th>
+        <td>{{player.name}}</td>
+        <td>{{player.position}}</td>
+        <td>{{player.rank}}</td>
+        <td><img src={{player.img_url}} class="responsive-image"></td>
+      </tr>
+    </tbody>
+  </table>

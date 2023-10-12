@@ -1,0 +1,60 @@
+<form (submit)="onSubmitPlayer(createPlayerForm)" #createPlayerForm="ngForm">
+    <div class="row mb-3">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control"ngModel #nameInput="ngModel" name="name" [(ngModel)]="name">
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <input type="hidden" class="form-control" ngModel #authorInput="ngModel" name="author" [(ngModel)]="author" value="Admin">
+      </div>
+    </div>
+    <fieldset class="row mb-3">
+      <legend class="col-form-label col-sm-2 pt-0">Position</legend>
+      <div class="col-sm-4">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="Fw" [(ngModel)]="position">
+          <label class="form-check-label" for="gridRadios1">
+            Fw
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="Md" [(ngModel)]="position">
+          <label class="form-check-label" for="gridRadios2">
+            Md
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="Df" [(ngModel)]="position">
+          <label class="form-check-label" for="gridRadios3">
+            Df
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios4" value="Pr" [(ngModel)]="position">
+          <label class="form-check-label" for="gridRadios4">
+            Pr
+          </label>
+        </div>
+      </div>
+      <legend class="col-form-label col-sm-1 pt-0">Rank: {{convertedRank}}</legend>
+      <div class="col-sm-4" style="display: flex; flex-direction: column; flex-wrap: wrap; align-items: center;">
+        <input type="range" class="form-range" min="0" max="5" step="1" id="customRange3" style="width: 90%;" ngModel #selectedRankInput="ngModel" name="selectedRank" [(ngModel)]="selectedRank" [defaultValue]=0 (ngModelChange)="updateRank()">
+        <div class="row" style="width: 100%;">
+            <div class="col" style="display: flex; justify-content: center;" *ngFor="let value of ['C', 'B', 'A', 'S', 'SS', 'SSS']">
+              <small class="form-text text-muted text-center">{{value}}</small>
+            </div>
+          </div>
+      </div>
+    </fieldset>
+    <div class="row mb-3">
+      <div class="col-sm-3">
+        <div class="input-group mb-3">
+          <input type="file" class="form-control" ngModel #selectedImageInput="ngModel" name="selectedImage" (change)="onFileSelected($event)">
+          <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+  </form>
