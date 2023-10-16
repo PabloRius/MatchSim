@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
-import { AgGridAngular } from 'ag-grid-angular';
-import { CellClickedEvent, ColDef, GridReadyEvent, ICellRendererParams, StatusPanelDef } from 'ag-grid-community';
+import { Component } from '@angular/core';
+import { ColDef, GridReadyEvent, ICellRendererParams } from 'ag-grid-community';
 import { Observable, map } from 'rxjs';
 import { PlayerImageRendererComponent } from 'src/app/renderers/player-image-renderer/player-image-renderer.component';
 import { AwsService } from 'src/app/services/aws.service';

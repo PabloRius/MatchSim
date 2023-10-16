@@ -4,7 +4,8 @@ import { ICellRendererParams } from 'ag-grid-community';
 
 @Component({
   selector: 'app-player-image-renderer',
-  templateUrl: './player-image-renderer.component.html'
+  templateUrl: './player-image-renderer.component.html',
+  styleUrls: ['./player-image-renderer.component.css']
 })
 export class PlayerImageRendererComponent implements ICellRendererAngularComp {
   private params!: ICellRendererParams;

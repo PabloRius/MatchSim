@@ -20,6 +20,7 @@ export class CreatePlayerComponent {
   selectedRank: number = 0
   rankConvertion = ["C", "B", "A", "S", "SS", "SSS"]
   convertedRank = this.rankConvertion[this.selectedRank]
+  nick = ""
   name = ""
   author = "Admin"
   position = ""
@@ -50,7 +51,7 @@ export class CreatePlayerComponent {
       this.aws.upload_image_to_s3(this.base64Image).subscribe((result) => {
         this.image_url = "https://ie-db-images.s3.eu-west-1.amazonaws.com/"+result.response
         console.log(this.name, this.author, this.convertedRank, this.position, this.image_url)
-        this.aws.upload_player_to_rds(this.name, this.author, this.position, this.convertedRank, this.image_url).subscribe((result) => {
+        this.aws.upload_player_to_rds(this.nick, this.name, this.author, this.position, this.convertedRank, this.image_url).subscribe((result) => {
           console.log(result)
           this.router.navigate(['/players']);
         })

@@ -1,13 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'ag-grid-community/styles/ag-grid.css';
-@import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-:root{
-    --title-color: #f3de3c;
-    --secondary-color: #A8DD2B
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+root {
+  --title-color: #f3de3c;
+  --secondary-color: #a8dd2b;
 }
 
-.body{
-    width: 95%;
-    margin: 30px auto 0 auto;
+.body {
+  width: 95%;
+  margin: 30px auto 0 auto;
+  padding-bottom: 60px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

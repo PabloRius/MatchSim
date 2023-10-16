@@ -1,0 +1,111 @@
+<div class="input-group input-group-lg" style="width: 60%; margin: 0 auto">
+  <input
+    type="text"
+    class="form-control"
+    aria-label="Sizing example input"
+    aria-describedby="inputGroup-sizing-lg"
+    placeholder="Team Name"
+    style="text-align: center; width: 100%"
+    [(ngModel)]="title"
+    name="title"
+  />
+
+  <div class="input-group mb-3" style="width: 45%; margin: 10px auto">
+    <label class="input-group-text" for="inputGroupSelect01">Formation</label>
+    <select
+      class="form-select"
+      id="inputGroupSelect01"
+      [(ngModel)]="selectedFormation"
+      name="selectedFormation"
+      (change)="parseFormation()"
+    >
+      <option *ngFor="let formation of formations" [ngValue]="formation">
+        {{ formation }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<div
+  style="
+    width: 35%;
+    height: 450px;
+    background-color: green;
+    margin: 25px auto 0 auto;
+    border-radius: 2px;
+  "
+>
+  <div
+    id="fw"
+    class="field-thingy"
+    style="background-color: rgba(0, 0, 0, 0.15)"
+    (dragover)="allowDrop($event)"
+    (dragleave)="resetDropZone($event)"
+    (drop)="drop($event)"
+  ></div>
+  <div
+    id="md"
+    class="field-thingy"
+    style="background-color: rgba(0, 0, 0, 0.3)"
+    (dragover)="allowDrop($event)"
+    (dragleave)="resetDropZone($event)"
+    (drop)="drop($event)"
+  ></div>
+  <div
+    id="df"
+    class="field-thingy"
+    style="background-color: rgba(0, 0, 0, 0.15)"
+    (dragover)="allowDrop($event)"
+    (dragleave)="resetDropZone($event)"
+    (drop)="drop($event)"
+  ></div>
+  <div
+    id="gk"
+    class="field-thingy"
+    style="background-color: rgba(0, 0, 0, 0.3)"
+    (dragover)="allowDrop($event)"
+    (dragleave)="resetDropZone($event)"
+    (drop)="drop($event)"
+  ></div>
+</div>
+
+<div
+  style="
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 20px auto;
+    background-color: green;
+    width: min-content;
+    padding: 10px;
+    column-gap: 10px;
+    border-radius: 5px;
+  "
+  (dragover)="allowDrop($event)"
+  (dragleave)="resetDropZone($event)"
+  (drop)="drop($event)"
+  id="bench"
+>
+  <span
+    *ngFor="let player of players; let i = index"
+    ngbTooltip="{{ player[0] }}"
+    style="
+      cursor: pointer;
+      height: 50px;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+    "
+    draggable="true"
+    (dragstart)="dragStart($event, player, i)"
+    [id]="'image-' + i"
+  >
+    <img src="{{ player[1] }}" style="height: 100%" />
+  </span>
+</div>
+<button (click)="saveComposition()">Save</button>
+
+<app-alerts
+  [alertType]="parentAlertType"
+  [content]="parentContent"
+></app-alerts>

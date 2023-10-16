@@ -1,0 +1,23 @@
+<div style="display: flex; flex-direction: row; column-gap: 10px">
+  <img src="{{ player_img }}" />
+  <p style="vertical-align: middle; margin-top: revert; margin-bottom: unset">
+    {{ nick }}
+  </p>
+</div>
+<div style="height: 500px">
+  <ag-grid-angular
+    style="width: 100%; height: 100%"
+    class="ag-theme-alpine"
+    [suppressRowClickSelection]="true"
+    [rowSelection]="rowSelection"
+    [rowData]="rowData$ | async"
+    [rowSelection]="'multiple'"
+    [animateRows]="true"
+    (gridReady)="onGridReady($event)"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+  ></ag-grid-angular>
+</div>
+<button type="button" class="btn btn-primary" (click)="saveChanges()">
+  Change
+</button>

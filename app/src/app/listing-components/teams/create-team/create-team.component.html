@@ -1,0 +1,21 @@
+<form (submit)="onSubmitTeam(createTeamForm)" #createTeamForm="ngForm">
+    <div class="row mb-3">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" ngModel #nameInput="ngModel" name="name" [(ngModel)]="name">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-10">
+            <input type="hidden" class="form-control" ngModel #authorInput="ngModel" name="author" [(ngModel)]="author" value="Admin">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm-3">
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" ngModel #selectedImageInput="ngModel" name="selectedImage" (change)="onFileSelected($event)">
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Insert</button>
+</form>

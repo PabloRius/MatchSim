@@ -1,0 +1,22 @@
+.teams_icons {
+  height: 100%;
+}
+
+img {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.rerouters-div {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.arrowButton {
+  border: none;
+  background-color: transparent;
+  color: rgb(121, 119, 119);
+}
