@@ -1,1 +1,151 @@
-<p>simulator works!</p>
+<div class="scoreboard">
+  <div
+    *ngIf="matchInProgress"
+    style="width: 100%; display: flex; align-items: center"
+  >
+    <p style="text-align: center; width: 100%; color: rgb(207, 148, 39)">
+      {{ time }}
+    </p>
+  </div>
+  <div
+    *ngIf="matchInProgress; else noMatch"
+    style="display: flex; flex-direction: row"
+  >
+    <div class="team-scoreboard">
+      <img
+        *ngIf="home_team_img"
+        src="{{ home_team_img }}"
+        alt="{{ visitor_team_name }}"
+      />{{ home_team_name }}
+    </div>
+    <div class="scoreboard-inside">
+      <p>{{ match_info.goals_home }}</p>
+      <p>:</p>
+      <p>{{ match_info.goals_visitor }}</p>
+    </div>
+    <div class="team-scoreboard">
+      <img
+        *ngIf="visitor_team_img"
+        src="{{ visitor_team_img }}"
+        alt="{{ visitor_team_name }}"
+      />{{ visitor_team_name }}
+    </div>
+  </div>
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    "
+  >
+    <div
+      *ngIf="matchInProgress"
+      style="width: 50%; display: flex; flex-direction: row"
+    >
+      <div class="team-goalers">
+        <p *ngFor="let player of home_team_goalers">{{ player }}</p>
+      </div>
+      <div class="team-goalers">
+        <p *ngFor="let player of visitor_team_goalers">{{ player }}</p>
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%; display: flex; align-items: center">
+    <button
+      *ngIf="matchOver == true"
+      class="new-button"
+      (click)="restartMatch()"
+    >
+      Start new match
+    </button>
+  </div>
+  <ng-template class="scoreboard-inside" #noMatch>
+    <div style="display: flex; flex-direction: column; row-gap: 10px">
+      <p style="font-size: 1rem; color: white; text-align: center">
+        Select the teams for the match
+      </p>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Home team
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let formation of simp_formations">
+              <a
+                style="cursor: pointer"
+                class="dropdown-item"
+                (click)="changeFormation('home', formation)"
+                >{{ formation.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Visitor Team
+          </button>
+          <ul class="dropdown-menu">
+            <li *ngFor="let formation of simp_formations">
+              <a
+                style="cursor: pointer"
+                class="dropdown-item"
+                (click)="changeFormation('visitor', formation)"
+                >{{ formation.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-success"
+        style="width: 30%; margin: 0 auto"
+        (click)="startMatch()"
+      >
+        Start
+      </button>
+    </div>
+  </ng-template>
+</div>
+<div class="comments" *ngIf="matchInProgress">
+  <p
+    *ngIf="posession_team == 'home'"
+    style="
+      background-color: rgba(100, 100, 255, 0.5);
+      border-radius: 25px;
+      padding: 10px;
+    "
+  >
+    <span style="color: rgb(0, 0, 100)">{{ posession_player }}</span> from
+    {{ posession_team }} has the posession of the ball
+  </p>
+  <p
+    *ngIf="posession_team == 'visitor'"
+    style="
+      background-color: rgba(255, 100, 100, 0.5);
+      border-radius: 25px;
+      padding: 10px;
+    "
+  >
+    <span style="color: rgb(100, 0, 0)">{{ posession_player }}</span> from
+    {{ posession_team }} has the posession of the ball
+  </p>
+  <div class="bubble" *ngFor="let line of last_info">{{ line }}</div>
+</div>

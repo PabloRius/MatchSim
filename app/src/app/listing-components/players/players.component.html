@@ -1,4 +1,21 @@
-<button type="button" class="btn btn-primary" routerLink="/create-player">Add player</button>
+<button
+  *ngIf="auth0.isAuthenticated$ | async"
+  type="button"
+  class="btn btn-primary"
+  routerLink="/create-player"
+>
+  Create player
+</button>
 <div style="height: 500px">
-    <ag-grid-angular style="width: 100%; height: 100%;" class="ag-theme-alpine" [rowData]="rowData$ | async" [rowSelection]="'multiple'" [animateRows]="true" (gridReady)="onGridReady($event)" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef" [sideBar]="true"></ag-grid-angular>
+  <ag-grid-angular
+    style="width: 100%; height: 100%"
+    class="ag-theme-alpine"
+    [rowData]="rowData$ | async"
+    [rowSelection]="'multiple'"
+    [animateRows]="true"
+    (gridReady)="onGridReady($event)"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [sideBar]="true"
+  ></ag-grid-angular>
 </div>

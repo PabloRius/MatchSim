@@ -1,0 +1,86 @@
+@media screen and (max-width: 991px) {
+  .account-info {
+    flex-direction: column;
+    row-gap: 30px;
+  }
+  .info-container {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .account-info {
+    flex-direction: row;
+  }
+  .info-container {
+    width: 35%;
+  }
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+h3 {
+  font-weight: 400;
+  font-size: 1.375rem;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+label {
+  font-size: 12px;
+  font-weight: 500;
+  width: 40%;
+}
+
+.separator {
+  border-bottom: 1px solid #e1e3e1;
+  width: 100%;
+  margin: 5px 0 15px 0;
+}
+
+.account-info {
+  display: flex;
+  column-gap: 5%;
+  justify-content: space-evenly;
+  font-family: "Google Sans", Roboto, Arial, sans-serif;
+}
+.info-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 5%;
+  border: 1px solid #e1e3e1;
+  border-radius: 8px;
+}
+
+.info-element {
+  min-height: 30px;
+  display: flex;
+  flex-direction: row;
+}
+
+.info-element p {
+  width: 45%;
+}
+
+.info-element svg {
+  width: 15%;
+  fill: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.info-element svg:hover {
+  fill: rgba(0, 0, 0, 0.4);
+}
+
+.edit-icon {
+  position: relative;
+  right: 5px;
+  top: 5px;
+}

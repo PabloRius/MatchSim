@@ -23,3 +23,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+-webkit-scrollbar:horizontal {
+  height: 10px;
+}

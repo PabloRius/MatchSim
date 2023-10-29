@@ -1,26 +1,30 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-import { ICellRendererAngularComp } from "ag-grid-angular";
-import { ICellRendererParams } from "ag-grid-community";
-import { AwsService } from "src/app/services/aws.service";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { ICellRendererAngularComp } from 'ag-grid-angular';
+import { ICellRendererParams } from 'ag-grid-community';
+import { AwsService } from 'src/app/services/aws.service';
 @Component({
-  selector: "app-rerouter-players",
-  templateUrl: "./rerouter-players.component.html",
-  styleUrls: ["./rerouter-players.component.css"],
+  selector: 'app-rerouter-players',
+  templateUrl: './rerouter-players.component.html',
+  styleUrls: ['./rerouter-players.component.css'],
 })
 export class RerouterPlayersComponent implements ICellRendererAngularComp {
   constructor(private aws: AwsService, private router: Router) {}
   private params!: ICellRendererParams;
-  players: string[] = [];
+  players_icons: string[] = [];
   name!: string;
   agInit(params: ICellRendererParams<any, any, any>): void {
     this.params = params;
     this.setImg(params);
-    this.aws.get_players_from_team(this.name).subscribe((result) => {
-      JSON.parse(result.response).forEach((each: [string, string]) => {
-        this.players.push(each[1]);
+    this.aws
+      .get_players_from_team(this.name, params.data.author)
+      .subscribe((result) => {
+        JSON.parse(result.response).forEach(
+          (each: [string, string, string, string, string, string]) => {
+            this.players_icons.push(each[3]);
+          }
+        );
       });
-    });
   }
   refresh(params: ICellRendererParams<any, any, any>): boolean {
     this.params = params;
@@ -32,7 +36,8 @@ export class RerouterPlayersComponent implements ICellRendererAngularComp {
   }
 
   addTeams() {
-    this.router.navigate(["/add-players", this.name]);
+    const author = this.params.data.author;
+    this.router.navigate(['/add-players', author, this.name]);
   }
 
   public scrollOffset = 0;

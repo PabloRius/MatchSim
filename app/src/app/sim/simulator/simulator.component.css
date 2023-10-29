@@ -1,0 +1,93 @@
+.scoreboard {
+  max-width: 60%;
+  background-color: rgb(47, 47, 47);
+  border-radius: 20px;
+  padding: 5% 7%;
+  margin: 70px auto 0 auto;
+  font-size: 2rem;
+}
+
+.scoreboard-inside {
+  flex-wrap: wrap;
+  align-items: center;
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgba(20, 20, 20, 0.1);
+  padding: 2% 4%;
+  display: flex;
+  flex-direction: row;
+  border: solid rgba(255, 255, 255, 0.2) 1px;
+}
+
+.scoreboard-inside p {
+  text-align: center;
+  margin-bottom: 0;
+  color: rgb(207, 148, 39);
+}
+
+.scoreboard-inside p:first-of-type,
+.scoreboard-inside p:last-of-type {
+  width: 40%;
+}
+.scoreboard-inside p:nth-child(2) {
+  width: 20%;
+}
+
+.new-button {
+  font-size: 1rem;
+  padding: 5px 15px;
+  margin: 10px auto 0 auto;
+  font-weight: 600;
+}
+
+.team-scoreboard {
+  flex-wrap: wrap;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  color: white;
+  font-size: 16px;
+}
+
+.team-goalers {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-goalers p {
+  margin-bottom: 0;
+  color: rgb(207, 148, 39);
+  font-size: 14px;
+}
+
+.team-goalers:first-of-type {
+  text-align: left;
+}
+
+.team-goalers:last-of-type {
+  text-align: right;
+}
+
+.comments {
+  display: flex;
+  flex-direction: column;
+
+  align-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.bubble {
+  position: relative;
+  background: #f8f8f8;
+  border-radius: 0.4em;
+  padding: 10px;
+  box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.53);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}

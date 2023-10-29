@@ -88,7 +88,7 @@
 >
   <span
     *ngFor="let player of players; let i = index"
-    ngbTooltip="{{ player[0] }}"
+    ngbTooltip="{{ player.nick }}"
     style="
       cursor: pointer;
       height: 50px;
@@ -100,7 +100,7 @@
     (dragstart)="dragStart($event, player, i)"
     [id]="'image-' + i"
   >
-    <img src="{{ player[1] }}" style="height: 100%" />
+    <img src="{{ player.img_url }}" style="height: 100%" />
   </span>
 </div>
 <button (click)="saveComposition()">Save</button>

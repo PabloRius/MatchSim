@@ -1,25 +1,26 @@
-import { Component } from "@angular/core";
-import { ColDef, GridReadyEvent, ICellRendererParams } from "ag-grid-community";
-import { Observable, map } from "rxjs";
-import { PlayerImageRendererComponent } from "src/app/renderers/player-image-renderer/player-image-renderer.component";
-import { ReroutersComponent } from "src/app/renderers/rerouters/rerouters.component";
-import { AwsService } from "src/app/services/aws.service";
+import { Component } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
+import { ColDef, GridReadyEvent, ICellRendererParams } from 'ag-grid-community';
+import { Observable, map } from 'rxjs';
+import { PlayerImageRendererComponent } from 'src/app/renderers/player-image-renderer/player-image-renderer.component';
+import { ReroutersComponent } from 'src/app/renderers/rerouters/rerouters.component';
+import { AwsService } from 'src/app/services/aws.service';
 
 @Component({
-  selector: "app-players",
-  templateUrl: "./players.component.html",
-  styleUrls: ["./players.component.css"],
+  selector: 'app-players',
+  templateUrl: './players.component.html',
+  styleUrls: ['./players.component.css'],
 })
 export class PlayersComponent {
-  constructor(private aws: AwsService) {}
+  constructor(private aws: AwsService, public auth0: AuthService) {}
   ngOnInit() {}
   columnDefs: ColDef[] = [
-    { headerName: "Nick", field: "nick" },
     {
-      headerName: "Image",
+      headerName: 'Image',
       filter: false,
+      maxWidth: 80,
       sortable: false,
-      field: "img_url",
+      field: 'img_url',
       cellRendererSelector: (params: ICellRendererParams<any>) => {
         const imageDetails = {
           component: PlayerImageRendererComponent,
@@ -27,21 +28,11 @@ export class PlayersComponent {
         return imageDetails;
       },
     },
-    { headerName: "Name", field: "name" },
-    { headerName: "Position", field: "position" },
-    { headerName: "Rank", field: "rank" },
-    {
-      headerName: "Teams",
-      filter: false,
-      sortable: false,
-      field: "nick",
-      cellRendererSelector: (params: ICellRendererParams<any>) => {
-        const teamsDetails = {
-          component: ReroutersComponent,
-        };
-        return teamsDetails;
-      },
-    },
+    { headerName: 'Nick', field: 'nick' },
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Position', field: 'position' },
+    { headerName: 'Rank', field: 'rank' },
+    { headerName: 'Author', field: 'author' },
   ];
 
   defaultColDef: ColDef = {
@@ -67,8 +58,8 @@ export class PlayersComponent {
           (element: [any, any, any, any, any, any, any]) => {
             let curr_el = {
               nick: element[0],
-              name: element[1],
-              author: element[2],
+              author: element[1],
+              name: element[2],
               position: element[3],
               rank: element[4],
               img_url: element[5],

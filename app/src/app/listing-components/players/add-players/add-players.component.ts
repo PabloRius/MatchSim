@@ -1,59 +1,83 @@
-import { Component } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   ColDef,
   GridApi,
   GridReadyEvent,
   ICellRendererParams,
-} from "ag-grid-community";
-import { Observable, first, map } from "rxjs";
-import { PlayerImageRendererComponent } from "src/app/renderers/player-image-renderer/player-image-renderer.component";
-import { AwsService } from "src/app/services/aws.service";
+} from 'ag-grid-community';
+import { Observable, first, map } from 'rxjs';
+import { PlayerImageRendererComponent } from 'src/app/renderers/player-image-renderer/player-image-renderer.component';
+import { AwsService } from 'src/app/services/aws.service';
 
 @Component({
-  selector: "app-add-players",
-  templateUrl: "./add-players.component.html",
-  styleUrls: ["./add-players.component.css"],
+  selector: 'app-add-players',
+  templateUrl: './add-players.component.html',
+  styleUrls: ['./add-players.component.css'],
 })
 export class AddPlayersComponent {
   team!: string;
+  team_author!: string;
   team_img!: string;
   prev_teams!: [];
-  simp_prev_teams: string[] = [];
-
+  simp_prev_teams: {
+    nick: string[0];
+    author: string;
+    name: string;
+    img_url: string;
+    position: string;
+    rank: string;
+  }[] = [];
+  username: string = '';
   constructor(
     private route: ActivatedRoute,
     private aws: AwsService,
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.team = this.route.snapshot.params["data"];
+    let profile_selector = localStorage.getItem('username');
+    if (profile_selector) {
+      this.username = profile_selector;
+    }
+    this.team = this.route.snapshot.params['team'];
     this.rowData$ = this.retrievePlayers();
-    this.aws.get_team_img(this.team).subscribe((result) => {
-      this.team_img = result["response"];
+    this.team_author = this.route.snapshot.params['team_author'];
+    this.aws.get_team_img(this.team, this.team_author).subscribe((result) => {
+      this.team_img = result['response'];
     });
-    this.aws.get_players_from_team(this.team).subscribe((result) => {
-      this.prev_teams = JSON.parse(result["response"]);
-      console.log(this.prev_teams);
-      this.prev_teams.forEach((team: [string, string, string]) => {
-        this.simp_prev_teams.push(team[0]);
+    this.aws
+      .get_players_from_team(this.team, this.team_author)
+      .subscribe((result) => {
+        this.prev_teams = JSON.parse(result['response']);
+        console.log(this.prev_teams);
+        this.prev_teams.forEach(
+          (team: [string, string, string, string, string, string]) => {
+            this.simp_prev_teams.push({
+              nick: team[0],
+              author: team[1],
+              name: team[2],
+              img_url: team[3],
+              position: team[4],
+              rank: team[5],
+            });
+          }
+        );
       });
-    });
   }
   private gridApi!: GridApi;
 
   columnDefs: ColDef[] = [
     {
-      headerName: "Nick",
-      field: "nick",
+      headerName: 'Nick',
+      field: 'nick',
       headerCheckboxSelection: true,
       checkboxSelection: true,
     },
     {
-      headerName: "Image",
+      headerName: 'Image',
       filter: false,
       sortable: false,
-      field: "img_url",
+      field: 'img_url',
       cellRendererSelector: (params: ICellRendererParams<any>) => {
         const imageDetails = {
           component: PlayerImageRendererComponent,
@@ -61,9 +85,9 @@ export class AddPlayersComponent {
         return imageDetails;
       },
     },
-    { headerName: "Name", field: "name" },
-    { headerName: "Position", field: "position" },
-    { headerName: "Rank", field: "rank" },
+    { headerName: 'Name', field: 'name' },
+    { headerName: 'Position', field: 'position' },
+    { headerName: 'Rank', field: 'rank' },
   ];
 
   defaultColDef: ColDef = {
@@ -77,7 +101,7 @@ export class AddPlayersComponent {
 
   retrievePlayers(): Observable<any[]> {
     // Realiza la solicitud HTTP y transforma los datos usando map
-    return this.aws.get_players_from_rds().pipe(
+    return this.aws.get_players_from_user(this.username).pipe(
       map((result: any) => {
         let loaded: any[] = [];
 
@@ -110,19 +134,26 @@ export class AddPlayersComponent {
     this.gridApi = params.api;
     this.selectRows();
   }
-  public rowSelection: "single" | "multiple" = "multiple";
+  public rowSelection: 'single' | 'multiple' = 'multiple';
 
   saveChanges() {
-    console.log(this.gridApi.getSelectedRows());
     let players_list: string[] = [];
+    let players_authors: string[] = [];
     for (let i = 0; i < this.gridApi.getSelectedRows().length; i++) {
       players_list.push(this.gridApi.getSelectedRows()[i].nick);
+      players_authors.push(this.gridApi.getSelectedRows()[i].author);
     }
     this.aws
-      .link_team_to_players(players_list.toString(), this.team)
+      .link_team_to_players(
+        players_list.toString(),
+        players_authors.toString(),
+        this.team,
+        this.team_author,
+        this.username
+      )
       .subscribe((result) => {
         console.log(result);
-        this.router.navigate(["/teams"]);
+        this.router.navigate(['/user-teams']);
       });
   }
 
@@ -142,16 +173,18 @@ export class AddPlayersComponent {
           img_url: string;
         }) => {
           console.log(this.simp_prev_teams);
-          if (this.simp_prev_teams.includes(element.nick)) {
-            console.log("COINSIDE");
-            this.gridApi.forEachNodeAfterFilterAndSort((node) => {
-              console.log(node.rowIndex);
-              if (node.rowIndex === index) {
-                console.log(node.rowIndex);
-                node.setSelected(true);
-              }
-            });
-          }
+          this.simp_prev_teams.forEach((simp_prev_team) => {
+            if (
+              simp_prev_team.nick == element.nick &&
+              simp_prev_team.author == element.author
+            ) {
+              this.gridApi.forEachNodeAfterFilterAndSort((node) => {
+                if (node.rowIndex === index) {
+                  node.setSelected(true);
+                }
+              });
+            }
+          });
           index++;
         }
       );

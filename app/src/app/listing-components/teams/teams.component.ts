@@ -1,15 +1,13 @@
-import { Component } from "@angular/core";
-import { ColDef, GridReadyEvent, ICellRendererParams } from "ag-grid-community";
-import { Observable, map } from "rxjs";
-import { PlayerImageRendererComponent } from "src/app/renderers/player-image-renderer/player-image-renderer.component";
-import { RerouterPlayersComponent } from "src/app/renderers/rerouter-players/rerouter-players.component";
-import { TeamViewRendererComponent } from "src/app/renderers/team-view-renderer/team-view-renderer.component";
-import { AwsService } from "src/app/services/aws.service";
+import { Component } from '@angular/core';
+import { ColDef, GridReadyEvent, ICellRendererParams } from 'ag-grid-community';
+import { Observable, map } from 'rxjs';
+import { PlayerImageRendererComponent } from 'src/app/renderers/player-image-renderer/player-image-renderer.component';
+import { AwsService } from 'src/app/services/aws.service';
 
 @Component({
-  selector: "app-teams",
-  templateUrl: "./teams.component.html",
-  styleUrls: ["./teams.component.css"],
+  selector: 'app-teams',
+  templateUrl: './teams.component.html',
+  styleUrls: ['./teams.component.css'],
 })
 export class TeamsComponent {
   constructor(private aws: AwsService) {}
@@ -17,21 +15,11 @@ export class TeamsComponent {
 
   columnDefs: ColDef[] = [
     {
-      headerName: "Name",
-      field: "name",
-      filter: "agNumberColumnFilter",
-      cellRendererSelector: (params: ICellRendererParams<any>) => {
-        const imageDetails = {
-          component: TeamViewRendererComponent,
-        };
-        return imageDetails;
-      },
-    },
-    {
-      headerName: "Image",
+      headerName: 'Image',
       filter: false,
+      maxWidth: 80,
       sortable: false,
-      field: "img_url",
+      field: 'img_url',
       cellRendererSelector: (params: ICellRendererParams<any>) => {
         const imageDetails = {
           component: PlayerImageRendererComponent,
@@ -40,16 +28,12 @@ export class TeamsComponent {
       },
     },
     {
-      headerName: "Players",
-      filter: false,
-      sortable: false,
-      field: "name",
-      cellRendererSelector: (params: ICellRendererParams<any>) => {
-        const teamsDetails = {
-          component: RerouterPlayersComponent,
-        };
-        return teamsDetails;
-      },
+      headerName: 'Name',
+      field: 'name',
+    },
+    {
+      headerName: 'Author',
+      field: 'author',
     },
   ];
 

@@ -1,3 +1,23 @@
+.team_icons_div {
+  width: 85%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -webkit-scrollbar-width: none;
+  scrollbar-gutter: 5px;
+}
+
+.team_icons_div::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.team_icons_div::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 .teams_icons {
   height: 100%;
 }
